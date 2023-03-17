@@ -10,8 +10,11 @@ fn update_using_yay() {
         .arg("-c")
         .arg("yay -Syu --noconfirm")
         .stdout(Stdio::piped())
-        .output()
-        .expect("yay -Syu did not work, do you have yay installed?");
+        .output();
+    let output = match output {
+        Ok(o) => o,
+        Err(e) => panic!("I have no idea what the fuck happened you should try again or fix your shit. You can look this up {}", e),
+    };
     println!("{}", String::from_utf8(output.stdout).unwrap());
 }
 
@@ -21,6 +24,6 @@ fn update_flatpak() {
         .arg("flatpak update -y")
         .stdout(Stdio::piped())
         .output()
-        .expect("flatpak update did not work");
+        .expect("Bro fix your shit I could not run this command");
     println!("{}",String::from_utf8(output.stdout).unwrap()); 
 }
